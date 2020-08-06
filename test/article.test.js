@@ -19,6 +19,7 @@ describe("Test the article paths", () => {
         throw new Error(`unable to connect to database: ${mongoUri}`);
       });
     });
+    console.log("123");
     await connectToDB();
     const response = await request(app).post("/login").send({
       username: 'j.y',
