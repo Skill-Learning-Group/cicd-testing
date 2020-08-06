@@ -28,7 +28,7 @@ describe("Test the article paths", () => {
     token = response.body.data.token;
   });
 
-  test("It should response the CREATE method", async () => {
+  test("It should response the CREATE method", async done => {
     const response = await request(app).post("/articles").send({
       title: 'article 1',
       content: 'article content',
@@ -37,26 +37,31 @@ describe("Test the article paths", () => {
     });
     expect(response.statusCode).toBe(201);
     recordId = response.body.data._id;
+    done();
   });
 
-  test("It should response the LIST method", async () => {
+  test("It should response the LIST method", async done => {
     const response = await request(app).get("/articles").send({ token });
     expect(response.statusCode).toBe(200);
+    done();
   });
 
-  test("It should response the READ method", async () => {
+  test("It should response the READ method", async done => {
     const response = await request(app).get(`/articles/${recordId}`).send({ token });
     expect(response.statusCode).toBe(200);
+    done();
   });
 
-  test("It should response the UPDATE method", async () => {
+  test("It should response the UPDATE method", async done => {
     const response = await request(app).put(`/articles/${recordId}`).send({ token, content: 'update content' });
     expect(response.statusCode).toBe(200);
+    done();
   });
 
-  test("It should response the DELETE method", async () => {
+  test("It should response the DELETE method", async done => {
     const response = await request(app).delete(`/articles/${recordId}`).send({ token });
     expect(response.statusCode).toBe(200);
+    done();
   });
 
 });
