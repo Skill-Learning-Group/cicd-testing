@@ -11,13 +11,18 @@ describe('test create user', () => {
     const mongoUri = config.mongo.host;
     mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 
-    mongoose.connection.on('connected', () => {
-      console.log(`connected to database: ${mongoUri}`);
-    });
+    await new Promise((resolve, reject) => {
+      mongoose.connection.on('connected', () => {
+        console.log(`connected to database: ${mongoUri}`);
+        resolve();
+      });
 
-    mongoose.connection.on('error', () => {
-      throw new Error(`unable to connect to database: ${mongoUri}`);
-    });
+      mongoose.connection.on('error', () => {
+        console.loog(`unable to connect to database: ${mongoUri}`);
+        reject();
+      });
+    })
+
 
     const loginResponse = await request(app).post('/login').send({ username: 'chung', password: 'pass123' });
     const { data } = loginResponse.body;

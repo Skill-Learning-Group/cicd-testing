@@ -3,12 +3,11 @@ const app = require("../server/config/express");
 const config = require("../server/config/config");
 let token;
 let recordId = null;
-
+const mongoose = require('mongoose');
 describe("Test the article paths", () => {
 
-  beforeAll(async () => { 
+  beforeAll(async () => {
     const connectToDB = async () => new Promise((resolve, reject) => {
-      const mongoose = require('mongoose');
       mongoose.Promise = Promise;
       const mongoUri = config.mongo.host;
       mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -63,5 +62,8 @@ describe("Test the article paths", () => {
     expect(response.statusCode).toBe(200);
     done();
   });
-
+  afterAll(async (done) => {
+    await mongoose.connection.close();
+    done();
+  });
 });
