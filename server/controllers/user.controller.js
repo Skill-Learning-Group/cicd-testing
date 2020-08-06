@@ -29,7 +29,7 @@ class UserController {
 
   static async get(req, res, next) {
     try {
-      const data = await User.findOne({ id: req.params.id });
+      const data = await User.findOne({ _id: req.params.id });
       return data ? res.status(200).json(APIsuccess(200, data)) : res.status(404).json(APIerror(404, { message: `User not found` }));
     } catch (error) {
       next(error);
