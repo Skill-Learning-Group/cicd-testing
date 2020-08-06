@@ -7,14 +7,13 @@ let recordId = null;
 describe("Test the article paths", () => {
 
   beforeAll(async () => { 
-    console.info('login');
     const connectToDB = async () => new Promise((resolve, reject) => {
       const mongoose = require('mongoose');
       mongoose.Promise = Promise;
       const mongoUri = config.mongo.host;
       mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
       mongoose.connection.on('connected', () => {
-        console.log(`connected to database: ${mongoUri}`);
+        console.info(`connected to database: ${mongoUri}`);
         resolve();
       });
       mongoose.connection.on('error', () => {
@@ -46,13 +45,11 @@ describe("Test the article paths", () => {
   });
 
   test("It should response the READ method", async () => {
-    console.log('read recordId', recordId)
     const response = await request(app).get(`/articles/${recordId}`).send({ token });
     expect(response.statusCode).toBe(200);
   });
 
   test("It should response the UPDATE method", async () => {
-    console.log('update recordId', recordId)
     const response = await request(app).put(`/articles/${recordId}`).send({ token, content: 'update content' });
     expect(response.statusCode).toBe(200);
   });
