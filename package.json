@@ -20,7 +20,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server/app.js",
-    "test": "jest"
+    "test": "jest --detectOpenHandles --coverage"
   },
   "repository": {
     "type": "git",
